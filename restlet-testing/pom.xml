@@ -1,0 +1,131 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+	<groupId>com.devsumo.technotes.camel</groupId>
+    <artifactId>restlet-testing</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+	<name>restlet-testing</name>
+    <url>http://www.devsumo.com/technotes/2016/10/camel-socket-permission-denied-using-port-0-with-restlets</url>
+    <description>Simple Camel Restlet example which illustrates how to use ephemeral ports for integration tests</description>
+    <organization>
+        <name>DevSumo</name>
+        <url>http://www.devsumo.com/</url>
+    </organization>
+
+    <properties>
+        <!-- General Maven properties -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        
+        <!-- Language/Specification versions -->
+        <java.version>1.8</java.version>
+    
+        <!-- Core dependencies -->
+        <camel.version>2.17.3</camel.version>
+        <slf4j.version>1.7.21</slf4j.version>
+		<log4j.version>2.6</log4j.version>
+
+        <!-- Maven plugin versions -->
+        <plugin.compiler.version>3.2</plugin.compiler.version>
+        <plugin.failsafe.version>2.19.1</plugin.failsafe.version>
+        <plugin.surefire.version>2.19.1</plugin.surefire.version>
+
+        <!-- Test dependency versions -->
+        <junit.version>4.12</junit.version>
+        <commons.io.version>2.5</commons.io.version>
+    </properties>    
+
+	<dependencies>
+		<dependency>
+    		<groupId>org.apache.logging.log4j</groupId>
+    		<artifactId>log4j-core</artifactId>
+    		<version>${log4j.version}</version>
+		</dependency>
+		<dependency>
+    		<groupId>org.slf4j</groupId>
+    		<artifactId>slf4j-api</artifactId>
+    		<version>${slf4j.version}</version>
+		</dependency>     
+		<dependency>
+    		<groupId>org.apache.logging.log4j</groupId>
+    		<artifactId>log4j-slf4j-impl</artifactId>
+    		<version>${log4j.version}</version>
+		</dependency>	
+	    <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-core</artifactId>
+            <version>${camel.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-restlet</artifactId>
+            <version>${camel.version}</version>
+        </dependency>
+        
+		<dependency>
+    		<groupId>junit</groupId>
+    		<artifactId>junit</artifactId>
+    		<version>${junit.version}</version>
+    		<scope>test</scope>
+		</dependency>
+		<dependency>
+    		<groupId>commons-io</groupId>
+    		<artifactId>commons-io</artifactId>
+    		<version>${commons.io.version}</version>
+    		<scope>test</scope>
+		</dependency>		
+	</dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${plugin.compiler.version}</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${plugin.failsafe.version}</version>
+                <configuration>
+                    <includes>
+                        <include>**/IT*.java</include>
+                    </includes>
+                </configuration>                
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${plugin.surefire.version}</version>
+                <configuration>
+                    <excludes>
+                        <exclude>**/IT*.java</exclude>
+                    </excludes>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.surefire</groupId>
+                        <artifactId>surefire-junit47</artifactId>
+                        <version>${plugin.surefire.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>           
+        </plugins>
+    </build>    
+	
+</project>
